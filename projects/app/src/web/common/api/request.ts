@@ -152,7 +152,7 @@ function request(
 
   return instance
     .request({
-      baseURL: 'http://43.155.168.172:3009/api',
+      baseURL: '/api',
       url,
       method,
       data: ['POST', 'PUT'].includes(method) ? data : null,
