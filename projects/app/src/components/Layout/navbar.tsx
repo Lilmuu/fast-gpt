@@ -112,7 +112,7 @@ const Navbar = ({ unread }: { unread: number }) => {
             {...itemStyles}
             {...(item.activeLink.includes(router.pathname)
               ? {
-                color: 'rgba(85, 201, 64, 1)',
+                color: 'rgba(51, 112, 255, 1)',
                 bg: 'white',
                 boxShadow:
                   '0px 0px 1px 0px rgba(19, 51, 107, 0.08), 0px 4px 4px 0px rgba(19, 51, 107, 0.05)'

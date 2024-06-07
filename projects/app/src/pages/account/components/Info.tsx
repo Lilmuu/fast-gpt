@@ -163,7 +163,7 @@ const MyInfo = () => {
       {/* user info */}
       {isPc && (
         <Flex alignItems={'center'} fontSize={'xl'} h={'30px'}>
-          <MyIcon mr={2} name={'support/user/userLight'} w={'20px'} />
+          {/* <MyIcon mr={2} name={'support/user/userLight'} w={'20px'} /> */}
           {t('support.user.User self info')}
         </Flex>
       )}

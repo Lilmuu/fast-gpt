@@ -38,7 +38,7 @@ const Account = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
 
   const tabList = [
     {
-      icon: 'support/user/userLight',
+      icon: 'support/user/userLight1',
       label: t('user.Personal Information'),
       id: TabEnum.info
     },

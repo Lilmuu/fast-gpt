@@ -51,21 +51,22 @@ const TeamPlugins = () => {
 
   const paths = data?.[1] || [];
   const plugins = data?.[0] || [];
+  const [hoverIndex, setHoverIndex] = useState<string>()
 
   return (
-    <PageContainer isLoading={isLoading} insertProps={{ px: [5, '48px'] }}>
-      <Flex pt={[4, '30px']} alignItems={'center'} justifyContent={'space-between'}>
+    <PageContainer isLoading={isLoading} insertProps={{ px: [5, '32px'], bg: 'url(/icon/containerBg.png) no-repeat 0 0 / 100% 100%' }}>
+      <Flex pt={[4, '44px']} pb={'40px'} alignItems={'center'} justifyContent={'space-between'}>
         <ParentPaths
           paths={paths.map((path, i) => ({
             parentId: path.parentId,
             parentName: path.parentName
           }))}
           FirstPathDom={
-            <Flex flex={1} alignItems={'center'}>
-              <Image src={'/imgs/workflow/plugin.svg'} alt={''} mr={2} h={'24px'} />
-              <Box className="textlg" letterSpacing={1} fontSize={'24px'} fontWeight={'bold'}>
+            <Flex flex={1} alignItems={'center'} display={'flex'} justifyContent={'space-between'}>
+              <Box className="textlg" letterSpacing={1} fontSize={'40px'} fontWeight={'bold'}>
                 {t('plugin.My Plugins')}({t('common.Beta')})
               </Box>
+              <Image src={'/imgs/workflow/db.png'} alt={''} mr={'64px'} h={'176px'} w={'196px'} />
             </Flex>
           }
           onClick={(e) => {
@@ -81,7 +82,9 @@ const TeamPlugins = () => {
             offset={[-30, 5]}
             width={120}
             Button={
-              <Button variant={'primaryOutline'} px={0}>
+              <Button variant={'primaryOutline'} px={0} width={'88px'} height={'32px'} background={'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'} color={'#fff'} _hover={{
+                background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'
+              }}>
                 <Flex alignItems={'center'} px={'20px'}>
                   <AddIcon mr={2} />
                   <Box>{t('common.Create New')}</Box>
@@ -126,12 +129,20 @@ const TeamPlugins = () => {
             borderWidth={'1.5px'}
             borderColor={'borderColor.low'}
             bg={'white'}
-            borderRadius={'md'}
+            borderRadius={'16px'}
             userSelect={'none'}
             position={'relative'}
+            onMouseEnter={() => {
+              setHoverIndex(plugin._id)
+            }}
+            onMouseLeave={() => {
+              setHoverIndex('')
+            }}
+            style={hoverIndex === plugin._id ? { color: '#fff' } : {}}
             _hover={{
-              borderColor: 'primary.300',
-              boxShadow: '1.5',
+              // borderColor: 'primary.300',
+              // boxShadow: '1.5',
+              background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);',
               '& .edit': {
                 display: 'flex'
               }
@@ -194,6 +205,7 @@ const TeamPlugins = () => {
               wordBreak={'break-all'}
               fontSize={'sm'}
               color={'myGray.600'}
+              style={hoverIndex === plugin._id ? { color: '#fff' } : {}}
             >
               {plugin.intro || t('plugin.No Intro')}
             </Box>

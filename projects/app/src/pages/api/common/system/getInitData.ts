@@ -40,7 +40,7 @@ const defaultFeConfigs: FastGPTFeConfigsType = {
   show_git: true,
   docUrl: 'https://doc.fastgpt.in',
   openAPIDocUrl: 'https://doc.fastgpt.in/docs/development/openapi',
-  systemTitle: '硅灵智脑',
+  systemTitle: '硅脑',
   concatMd:
     '项目开源地址: [FastGPT GitHub](https://github.com/labring/FastGPT)\n交流群: ![](https://oss.laf.run/htr4n1-images/fastgpt-qr-code.jpg)',
   limit: {
@@ -97,7 +97,7 @@ export async function initSystemConfig() {
       ...defaultFeConfigs,
       ...(dbConfig.feConfigs || {}),
       isPlus: !!FastGPTProUrl,
-      systemTitle: '硅灵智脑'
+      systemTitle: '硅脑'
     },
     systemEnv: {
       ...fileRes.systemEnv,

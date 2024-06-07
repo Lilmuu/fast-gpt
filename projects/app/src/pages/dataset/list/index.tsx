@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Box, Flex, Grid, useDisclosure, Image, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
@@ -138,10 +138,11 @@ const Kb = () => {
       }),
     [myDatasets]
   );
+  const [hoverIndex, setHoverIndex] = useState<string>()
 
   return (
-    <PageContainer isLoading={isFetching} insertProps={{ px: [5, '48px'] }}>
-      <Flex pt={[4, '30px']} alignItems={'center'} justifyContent={'space-between'}>
+    <PageContainer isLoading={isFetching} insertProps={{ px: [5, '32px'], bg: 'url(/icon/containerBg.png) no-repeat 0 0 / 100% 100%' }}>
+      <Flex pt={[4, '44px']} pb={'40px'} alignItems={'center'} justifyContent={'space-between'}>
         {/* url path */}
         <ParentPaths
           paths={paths.map((path, i) => ({
@@ -149,11 +150,16 @@ const Kb = () => {
             parentName: path.parentName
           }))}
           FirstPathDom={
-            <Flex flex={1} alignItems={'center'}>
-              <Image src={'/imgs/workflow/db.png'} alt={''} mr={2} h={'24px'} />
-              <Box className="textlg" letterSpacing={1} fontSize={'24px'} fontWeight={'bold'}>
-                {t('core.dataset.My Dataset')}
-              </Box>
+            <Flex flex={1} alignItems={'center'} display={'flex'} justifyContent={'space-between'}>
+              <Flex flexFlow={'column'}>
+                <Box className="textlg" letterSpacing={1} fontSize={'40px'} fontWeight={'bold'}>
+                  {t('core.dataset.My Dataset')}
+                </Box>
+                <Box letterSpacing={1} fontSize={'36px'} fontWeight={'bold'}>
+                  {t('core.dataset.My Dataset intro')}
+                </Box>
+              </Flex>
+              <Image src={'/imgs/workflow/db.png'} alt={''} mr={'64px'} h={'176px'} w={'196px'} />
             </Flex>
           }
           onClick={(e) => {
@@ -170,7 +176,9 @@ const Kb = () => {
             offset={[-30, 5]}
             width={120}
             Button={
-              <Button variant={'primaryOutline'} px={0}>
+              <Button variant={'primaryOutline'} px={0} width={'88px'} height={'32px'} background={'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'} color={'#fff'} _hover={{
+                background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'
+              }}>
                 <Flex alignItems={'center'} px={'20px'}>
                   <AddIcon mr={2} />
                   <Box>{t('common.Create New')}</Box>
@@ -217,7 +225,7 @@ const Kb = () => {
             borderWidth={1.5}
             borderColor={dragTargetId === dataset._id ? 'primary.600' : 'borderColor.low'}
             bg={'white'}
-            borderRadius={'md'}
+            borderRadius={'16px'}
             minH={'130px'}
             position={'relative'}
             data-drag-id={dataset.type === DatasetTypeEnum.folder ? dataset._id : undefined}
@@ -248,9 +256,17 @@ const Kb = () => {
               } catch (error) { }
               setDragTargetId(undefined);
             }}
+            onMouseEnter={() => {
+              setHoverIndex(dataset._id)
+            }}
+            onMouseLeave={() => {
+              setHoverIndex('')
+            }}
+            style={hoverIndex === dataset._id ? { color: '#fff' } : {}}
             _hover={{
-              borderColor: 'primary.300',
-              boxShadow: '1.5',
+              // borderColor: 'primary.300',
+              // boxShadow: '1.5',
+              background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);',
               '& .delete': {
                 display: 'block'
               }
@@ -344,20 +360,20 @@ const Kb = () => {
                     },
                     ...(dataset.permission === PermissionTypeEnum.private
                       ? [
-                        {
-                          label: (
-                            <Flex alignItems={'center'}>
-                              <MyIcon name={'support/permission/publicLight'} w={'14px'} mr={2} />
-                              {t('permission.Set Public')}
-                            </Flex>
-                          ),
-                          onClick: () => {
-                            updateDataset({
-                              id: dataset._id,
-                              permission: PermissionTypeEnum.public
-                            });
-                          }
-                        }
+                        // {
+                        //   label: (
+                        //     <Flex alignItems={'center'}>
+                        //       <MyIcon name={'support/permission/publicLight'} w={'14px'} mr={2} />
+                        //       {t('permission.Set Public')}
+                        //     </Flex>
+                        //   ),
+                        //   onClick: () => {
+                        //     updateDataset({
+                        //       id: dataset._id,
+                        //       permission: PermissionTypeEnum.public
+                        //     });
+                        //   }
+                        // }
                       ]
                       : [
                         {
@@ -411,7 +427,7 @@ const Kb = () => {
               py={1}
               wordBreak={'break-all'}
               fontSize={'sm'}
-              color={'myGray.500'}
+              style={hoverIndex === dataset._id ? { color: '#fff' } : { color: 'rgba(51, 112, 255, 1)' }}
             >
               {dataset.intro ||
                 (dataset.type === DatasetTypeEnum.folder
@@ -420,10 +436,10 @@ const Kb = () => {
             </Box>
             <Flex alignItems={'center'} fontSize={'sm'}>
               <Box flex={1}>
-                <PermissionIconText permission={dataset.permission} color={'myGray.600'} />
+                <PermissionIconText permission={dataset.permission} color={'myGray.600'} style={hoverIndex === dataset._id ? { color: '#fff' } : {}} />
               </Box>
               {dataset.type !== DatasetTypeEnum.folder && (
-                <DatasetTypeTag type={dataset.type} py={1} px={2} />
+                <DatasetTypeTag type={dataset.type} py={1} px={2} color={'myGray.900'} style={hoverIndex === dataset._id ? { color: 'myGray.900' } : {}} />
               )}
             </Flex>
           </Box>

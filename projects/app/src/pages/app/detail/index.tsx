@@ -66,12 +66,12 @@ const AppDetail = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
       ...(feConfigs?.hide_app_flow
         ? []
         : [
-            {
-              label: t('core.app.navbar.Flow mode'),
-              id: TabEnum.adEdit,
-              icon: 'core/modules/flowLight'
-            }
-          ]),
+          {
+            label: t('core.app.navbar.Flow mode'),
+            id: TabEnum.adEdit,
+            icon: 'core/modules/flowLight'
+          }
+        ]),
       {
         label: t('core.app.navbar.Publish app'),
         id: TabEnum.publish,

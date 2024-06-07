@@ -78,7 +78,7 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 
   return (
     <>
-      <Box h={'100%'} bg={'url(/icon/appBgs.png)'}>
+      <Box h={'100%'} bg={'url(/icon/appBgs.png) no-repeat 0 0 / 100% 100%'}>
         {isPc === true && (
           <>
             {isHideNavbar ? (

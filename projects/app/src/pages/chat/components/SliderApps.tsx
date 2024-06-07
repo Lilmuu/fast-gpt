@@ -57,23 +57,23 @@ const SliderApps = ({
             alignItems={'center'}
             {...(item._id === activeAppId
               ? {
-                  bg: 'white',
-                  boxShadow: 'md'
-                }
+                bg: 'white',
+                boxShadow: 'md'
+              }
               : {
-                  _hover: {
-                    bg: 'myGray.200'
-                  },
-                  onClick: () => {
-                    router.replace({
-                      query: {
-                        ...router.query,
-                        chatId: '',
-                        appId: item._id
-                      }
-                    });
-                  }
-                })}
+                _hover: {
+                  bg: 'myGray.200'
+                },
+                onClick: () => {
+                  router.replace({
+                    query: {
+                      ...router.query,
+                      chatId: '',
+                      appId: item._id
+                    }
+                  });
+                }
+              })}
           >
             <Avatar src={item.avatar} w={'24px'} />
             <Box ml={2} className={'textEllipsis'}>

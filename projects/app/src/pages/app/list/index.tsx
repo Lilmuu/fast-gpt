@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Box, Grid, Flex, IconButton, Button, useDisclosure } from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
+import { Box, Grid, Flex, IconButton, Button, useDisclosure, Image } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { AddIcon } from '@chakra-ui/icons';
@@ -58,14 +58,25 @@ const MyApps = () => {
   const { isFetching } = useQuery(['loadApps'], () => loadMyApps(true), {
     refetchOnMount: true
   });
+  const [hoverIndex, setHoverIndex] = useState<string>()
 
   return (
-    <PageContainer isLoading={isFetching} insertProps={{ px: [5, '48px'] }}>
-      <Flex pt={[4, '30px']} alignItems={'center'} justifyContent={'space-between'}>
-        <Box letterSpacing={1} fontSize={['20px', '24px']} color={'myGray.900'}>
-          {appT('My Apps')}
-        </Box>
-        <Button leftIcon={<AddIcon />} variant={'primaryOutline'} onClick={onOpenCreateModal}>
+    <PageContainer isLoading={isFetching} insertProps={{ px: [5, '32px'], bg: 'url(/icon/containerBg.png) no-repeat 0 0 / 100% 100%' }}>
+      <Flex pt={[4, '44px']} pb={'40px'} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex flex={1} justifyContent={'space-between'} alignItems={'center'}>
+          <Flex flexFlow={'column'}>
+            <Box letterSpacing={1} fontSize={'40px'} color={'rgba(51, 112, 255, 1)'} fontWeight={'bold'}>
+              {appT('My Apps')}
+            </Box>
+            <Box letterSpacing={1} fontSize={'36px'} fontWeight={'bold'}>
+              {appT('My Apps Intro')}
+            </Box>
+          </Flex>
+          <Image src={'/imgs/workflow/db.png'} alt={''} mr={'64px'} h={'176px'} w={'196px'} />
+        </Flex>
+        <Button leftIcon={<AddIcon />} variant={'primaryOutline'} onClick={onOpenCreateModal} width={'88px'} height={'32px'} background={'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'} color={'#fff'} _hover={{
+          background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);'
+        }}>
           {commonT('New Create')}
         </Button>
       </Flex>
@@ -88,14 +99,22 @@ const MyApps = () => {
               borderWidth={'1.5px'}
               borderColor={'borderColor.low'}
               bg={'white'}
-              borderRadius={'md'}
+              borderRadius={'16px'}
               userSelect={'none'}
               position={'relative'}
               display={'flex'}
               flexDirection={'column'}
+              onMouseEnter={() => {
+                setHoverIndex(app._id)
+              }}
+              onMouseLeave={() => {
+                setHoverIndex('')
+              }}
+              style={hoverIndex === app._id ? { color: '#fff' } : {}}
               _hover={{
-                borderColor: 'primary.300',
-                boxShadow: '1.5',
+                // borderColor: 'primary.300',
+                // boxShadow: '1.5',
+                background: 'linear-gradient(131.62deg, rgba(51, 112, 255, 1) 0%, rgba(130, 168, 255, 1) 100%);',
                 '& .delete': {
                   display: 'flex'
                 },
@@ -125,6 +144,9 @@ const MyApps = () => {
                     icon={<MyIcon name={'delete'} w={'14px'} />}
                     aria-label={'delete'}
                     display={['', 'none']}
+                    _hover={{
+                      background: '#fff'
+                    }}
                     onClick={(e) => {
                       e.stopPropagation();
                       openConfirm(() => onclickDelApp(app._id))();
@@ -138,22 +160,26 @@ const MyApps = () => {
                 py={2}
                 wordBreak={'break-all'}
                 fontSize={'sm'}
-                color={'myGray.600'}
+                color={'rgba(51, 112, 255, 1)'}
+                style={hoverIndex === app._id ? { color: '#fff' } : {}}
               >
                 {app.intro || '这个应用还没写介绍~'}
               </Box>
               <Flex h={'34px'} alignItems={'flex-end'}>
                 <Box flex={1}>
-                  <PermissionIconText permission={app.permission} color={'myGray.600'} />
+                  <PermissionIconText permission={app.permission} color={'myGray.600'} style={hoverIndex === app._id ? { color: '#fff' } : {}} />
                 </Box>
                 {userInfo?.team.canWrite && (
                   <IconButton
                     className="chat"
                     size={'xsSquare'}
                     variant={'whitePrimary'}
+                    _hover={{
+                      background: '#fff'
+                    }}
                     icon={
                       <MyTooltip label={'去聊天'}>
-                        <MyIcon name={'core/chat/chatLight'} w={'14px'} />
+                        <MyIcon name={'core/chat/chatLight2'} w={'14px'} />
                       </MyTooltip>
                     }
                     aria-label={'chat'}
